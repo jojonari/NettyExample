@@ -7,13 +7,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class BlockingServer {
+	private ServerSocket server;
+
 	public static void main(String[] args) throws Exception {
 		BlockingServer server = new BlockingServer();
 		server.run();
 	}
 	
 	private void run() throws IOException {
-		ServerSocket server = new ServerSocket(8888);
+		server = new ServerSocket(8888);
 		System.out.println("접속 대기중");
 		
 		while(true){
