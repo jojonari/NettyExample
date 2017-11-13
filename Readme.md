@@ -31,4 +31,17 @@
 	- TCP와 SCTP
 		* TCP  : 3 way handshake(SYN-ACK 구조)
 		* SCTP : 4 way handshake(INIT-ACK, COOKIE-ECHO 구조)를 사용, 연결 정보에 쿠키를 삽입하여 DoS와 같은 네트워크 공격을 보호, 반닫힘 상태를 지원하지 않음
+
+* 4장
+	- 파이프라인 : 이벤트 전달
+	- 이벤트 핸들러 : 이벤트 처리
+	- 코덱 : 이벤트 핸들러 구현체
+	- 네티 내부에서는 모든 데이터가 ByteBuf로 관리된다.
+	- 인바운드 이벤트 발생 순서	
+		1. 이벤트 루프에 채널 등록(channelRegistered)
+		2. 채널 활성화(channelActive)
+		3. 데이터 수신(channelRead)
+		4. 데이터 수신 완료(channelReadComplete)
+		5. 채널 비활성화(channellnactive)
+		6. 이벤트 루프에서 채널 제거(channelUnregistered)
 			

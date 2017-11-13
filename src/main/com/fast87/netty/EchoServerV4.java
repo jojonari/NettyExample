@@ -3,12 +3,12 @@ package com.fast87.netty;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
 
 public class EchoServerV4 {
     public static void main(String[] args) throws Exception {
@@ -18,21 +18,21 @@ public class EchoServerV4 {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
              .channel(NioServerSocketChannel.class)
-             .childOption(ChannelOption.SO_LINGER, 0)
              .childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) {
                     ChannelPipeline p = ch.pipeline();
-                    p.addLast(new EchoServerHandler());
+                    p.addLast(new EchoServerV4FirstHandler());
+                    p.addLast(new EchoServerV4SecondHandler());
                 }
             });
 
             ChannelFuture f = b.bind(8888).sync();
-
             f.channel().closeFuture().sync();
         }
         finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
-    }}
+    }
+}

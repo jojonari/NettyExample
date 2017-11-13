@@ -8,8 +8,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 
 public class EchoServerV3 {
     public static void main(String[] args) throws Exception {
@@ -23,13 +21,12 @@ public class EchoServerV3 {
                 @Override
                 public void initChannel(SocketChannel ch) {
                     ChannelPipeline p = ch.pipeline();
-                    p.addLast(new LoggingHandler(LogLevel.INFO));
-                    p.addLast(new EchoServerHandler());
+                    p.addLast(new EchoServerV3FirstHandler());
+                    p.addLast(new EchoServerV3SecondHandler());
                 }
             });
 
             ChannelFuture f = b.bind(8888).sync();
-
             f.channel().closeFuture().sync();
         }
         finally {
