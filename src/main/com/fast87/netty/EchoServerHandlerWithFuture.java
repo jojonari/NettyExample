@@ -1,15 +1,25 @@
 package com.fast87.netty;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-public class EchoServerHandler extends ChannelInboundHandlerAdapter {
+public class EchoServerHandlerWithFuture extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ChannelFuture channelFuture = ctx.writeAndFlush(msg);
-        channelFuture.addListener(ChannelFutureListener.CLOSE);
+
+        final int writeMessageSize = ((ByteBuf) msg).readableBytes();
+
+        channelFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) throws Exception {
+                System.out.println("전송한 Byte : " + writeMessageSize);
+                future.channel().close();
+            }
+        });
     }
 
     @Override
