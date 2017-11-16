@@ -1,15 +1,25 @@
 package com.fast87.netty;
 
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
+import java.nio.charset.Charset;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ChannelFuture channelFuture = ctx.writeAndFlush(msg);
-        channelFuture.addListener(ChannelFutureListener.CLOSE);
+        ByteBuf readMessage = (ByteBuf) msg;
+        System.out.println("channelRead : " + readMessage.toString(Charset.defaultCharset()));
+
+        ByteBufAllocator byteBufAllocator = ctx.alloc();
+        ByteBuf newBuffer = byteBufAllocator.buffer();
+        
+        // newBuffer 사용.
+        System.out.println(newBuffer.toString());
+
+        ctx.write(msg);
     }
 
     @Override
