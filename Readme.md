@@ -1,9 +1,7 @@
 # 자바 네트워크 소녀 Netty
 
-> * book : http://www.hanbit.co.kr/store/books/look.php?p_code=B2683487348
-> * github : https://github.com/krisjey/netty.book.kor
-
-실습예
+> * book : (http://www.hanbit.co.kr/store/books/look.php?p_code=B2683487348)
+> * 저자 github : (https://github.com/krisjey/netty.book.kor)
 
 * 1장
 	- 실습예제는 java appication으로 실행해야 한다.
